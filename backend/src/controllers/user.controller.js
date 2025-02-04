@@ -69,7 +69,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const errors = await validationResult(req);
 
     if (!errors.isEmpty()) {
-        throw new ApiError(400, "Invalid details");
+        throw new ApiError(401, "Invalid details");
     }
 
     const { email, password } = req.body;
@@ -77,13 +77,13 @@ const loginUser = asyncHandler(async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-        throw new ApiError(404, "Inavalid email or password");
+        throw new ApiError(401, "Inavalid email or password");
     }
 
     const isPasswordValid = await user.isPasswordCorrect(password);
 
     if (!isPasswordValid) {
-        throw new ApiError(404, "Inavalid email or password");
+        throw new ApiError(401, "Inavalid email or password");
     }
 
     const { accessToken, refreshToken } = await generatAccessAndRefreshToken(
@@ -107,13 +107,40 @@ const loginUser = asyncHandler(async (req, res) => {
             new ApiResponse(
                 200,
                 {
-                    user: loggedInUser,
-                    accessToken,
-                    refreshToken,
+                    user: loggedInUser,accessToken
                 },
                 "User logged in successfully"
             )
         );
 });
 
-export { registerUser, loginUser };
+const logoutUser = asyncHandler(async (req, res) => {
+    await User.findByIdAndUpdate(
+        req.user,
+        {
+            $set: {
+                refreshToken: "", // this removes the field from document
+            },
+        },
+        {
+            new: true,
+        }
+    );
+
+    const options = {
+        httpOnly: true,
+        secure: true,
+    };
+
+    return res
+        .status(200)
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(new ApiResponse(200, {}, "User logged Out"));
+});
+
+const getProfile = asyncHandler(async (req, res) => {
+    res.status(200).json(new ApiResponse(200, req.user, "User profile"));
+});
+
+export { registerUser, loginUser, logoutUser, getProfile };

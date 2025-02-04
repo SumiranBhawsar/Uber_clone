@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: false,
     },
     socketId: {
         type: String,
@@ -34,7 +33,6 @@ const userSchema = new mongoose.Schema({
     },
     refreshToken: {
         type: String,
-        select: false,
     },
 });
 

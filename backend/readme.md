@@ -71,3 +71,72 @@ The request body should be a JSON object containing the following fields:
       "success": false
     }
     ```
+
+## /api/v1/users/login
+
+### Description
+This endpoint is used to log in an existing user.
+
+### Method
+`POST`
+
+### Request Body
+The request body should be a JSON object containing the following fields:
+
+- `email` (string): The email address of the user. Must be a valid email.
+- `password` (string): The password for the user account. Must be at least 6 characters long.
+
+### Example Request
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
+
+### Responses
+
+#### Success
+- **Status Code**: `200 OK`
+- **Response Body**:
+  ```json
+  {
+    "status": 200,
+    "message": "User logged in successfully",
+    "data": {
+      "user": {
+        "_id": "user_id",
+        "fullname": {
+          "firstname": "john",
+          "lastname": "doe"
+        },
+        "email": "user@example.com"
+      },
+      "accessToken": "access_token",
+      "refreshToken": "refresh_token"
+    },
+    "success": true
+  }
+  ```
+
+#### Error
+- **Status Code**: `401 Unauthorized`
+  - **Response Body**:
+    ```json
+    {
+      "statusCode": 401,
+      "message": "Invalid details",
+      "errors": [],
+      "success": false
+    }
+    ```
+- **Status Code**: `500 Internal Server Error`
+  - **Response Body**:
+    ```json
+    {
+      "statusCode": 500,
+      "message": "Something went wrong while logging in",
+      "errors": [],
+      "success": false
+    }
+    ```

@@ -1,6 +1,13 @@
 import { Router } from "express";
-import { registerUser, loginUser } from "../controllers/user.controller.js";
+import {
+    registerUser,
+    loginUser,
+    getProfile,
+    logoutUser,
+} from "../controllers/user.controller.js";
 import { body } from "express-validator";
+// import { verifyJWT } from "../middlewares/auth.middleware.js";
+import { authentication } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -21,5 +28,9 @@ router
         body("email").isEmail().withMessage("Please provide a valid email"),
     ])
     .post(loginUser);
+
+router.route("/profile").post(authentication, getProfile);
+
+router.route("/logout").post(authentication, logoutUser);
 
 export default router;
