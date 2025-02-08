@@ -29,6 +29,10 @@ const registerUser = asyncHandler(async (req, res, next) => {
 
     const { firstname, lastname, email, password } = req.body;
 
+    if (!firstname || !lastname || !email || !password) {
+        throw new ApiError(400, "All fields are required");
+    }
+
     const existedUser = await User.findOne({ email });
 
     if (existedUser) {
@@ -53,7 +57,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
     }
 
     return res
-        .status(201)
+        .status(200)
         .json(
             new ApiResponse(201, "User registered successfully", createdUser)
         );
@@ -107,7 +111,8 @@ const loginUser = asyncHandler(async (req, res) => {
             new ApiResponse(
                 200,
                 {
-                    user: loggedInUser,accessToken
+                    user: loggedInUser,
+                    accessToken,
                 },
                 "User logged in successfully"
             )

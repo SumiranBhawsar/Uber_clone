@@ -20,7 +20,9 @@ app.use(cookieParser());
 // import routes
 
 import userRouter from "./routes/user.routes.js";
+import captainRouter from "./routes/captain.routes.js";
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/captains", captainRouter);
 
 export { app };
