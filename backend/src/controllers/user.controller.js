@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { validationResult } from "express-validator";
 import { ApiError } from "../utils/ApiError.js";
 import { User } from "../models/user.model.js";
-import { ApiResponse } from "../utils/ApiRespnse.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
 
 const generatAccessAndRefreshToken = async (userId) => {
     try {

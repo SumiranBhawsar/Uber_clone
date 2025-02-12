@@ -33,12 +33,13 @@ const captainSchema = new mongoose.Schema(
             vehicleType: {
                 type: String,
                 required: true,
-                enum: ["auto", "car", "bick"],
+                enum: ["auto", "car", "bike"],
             },
             licensePlate: {
                 type: String,
                 required: true,
                 unique: true,
+                sparse: true,
             },
             capacity: {
                 type: Number,
