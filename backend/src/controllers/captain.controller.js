@@ -92,7 +92,7 @@ const captainRegister = asyncHandler(async (req, res) => {
                 "Duplicate key error: " + JSON.stringify(error.keyValue)
             );
         }
-        throw new ApiError(500, "Internal Server Error");
+        throw new ApiError(500, "Internal Server Error: " + error.message);
     }
 });
 
