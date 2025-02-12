@@ -39,7 +39,6 @@ const captainSchema = new mongoose.Schema(
                 type: String,
                 required: true,
                 unique: true,
-                sparse: true,
             },
             capacity: {
                 type: Number,
