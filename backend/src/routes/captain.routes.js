@@ -1,7 +1,12 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { captainRegister } from "../controllers/captain.controller.js";
-import { authentication } from "../middlewares/auth.middleware.js";
+import {
+    captainLogin,
+    captainLogout,
+    captainProfile,
+    captainRegister,
+} from "../controllers/captain.controller.js";
+import { authentication } from "../middlewares/authForCaptain.middleware.js";
 
 const router = Router();
 
@@ -28,5 +33,16 @@ router
         ],
         captainRegister
     );
+
+router
+    .route("/login", [
+        body("email").isEmail().withMessage("Please provide a valid email"),
+        body("password").notEmpty().withMessage("Password is required"),
+    ])
+    .post(captainLogin);
+
+router.route("/logout").post(authentication, captainLogout);
+
+router.route("/profile").post(authentication, captainProfile);
 
 export default router;
