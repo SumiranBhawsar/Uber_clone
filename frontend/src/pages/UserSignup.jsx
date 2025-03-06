@@ -2,8 +2,10 @@
 /* eslint-disable react/no-unescaped-entities */
 // import React from 'react'
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { UserDataContext } from "../context/UserContext";
 
 function UserSignup() {
   const [email, setemail] = useState("");
@@ -12,18 +14,36 @@ function UserSignup() {
   const [lastName, setlastName] = useState("");
   const [userData, setuserData] = useState({});
 
-  const handleSubmit = (e) => {
+  const { user, setuser } = React.useContext(UserDataContext);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setuserData({
-      firstName,
-      lastName,
-      email,
-      password,
-    });
-    setemail("");
-    setpassword("");
-    setfirstName("");
-    setlastName("");
+
+    const newUser = {
+      firstname: firstName,
+      lastname: lastName,
+      email: email,
+      password: password,
+    };
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/register`,
+      newUser
+    );
+
+    console.log(response);
+
+    if (response.status === 200) {
+      const data = response.data;
+      console.log(data);
+      setuser(data.user);
+
+      navigate("/profile");
+    }
+
+    setemail("", setpassword(""), setfirstName(""), setlastName(""));
   };
 
   return (

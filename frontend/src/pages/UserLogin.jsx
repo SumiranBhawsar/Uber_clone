@@ -1,21 +1,41 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserDataContext } from "../context/UserContext";
+import axios from "axios";
 
 function UserLogin() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [userData, setuserData] = useState({});
+  const { user, setuser } = React.useContext(UserDataContext);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setuserData({
+    const userData = {
       email: email,
       password: password,
-    });
+    };
 
-    console.log(userData);
+    // console.log(userData);
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_BASE_URL}/users/login`,
+      userData
+    );
+
+    console.log(response);
+
+    if (response.status === 200) {
+      const data = response.data;
+      console.log(data);
+      setuser(data.user);
+      navigate("/profile");
+    }
 
     setemail("");
     setpassword("");
@@ -79,4 +99,3 @@ function UserLogin() {
 }
 
 export default UserLogin;
- 
