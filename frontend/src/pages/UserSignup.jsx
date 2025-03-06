@@ -33,14 +33,14 @@ function UserSignup() {
       newUser
     );
 
-    console.log(response);
+    // console.log(response);
 
     if (response.status === 200) {
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       setuser(data.user);
 
-      navigate("/profile");
+      navigate("/login");
     }
 
     setemail("", setpassword(""), setfirstName(""), setlastName(""));

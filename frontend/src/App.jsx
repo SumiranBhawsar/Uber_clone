@@ -8,6 +8,7 @@ import CaptainLogin from "./pages/CaptainLogin";
 import CaptainSignup from "./pages/CaptainSignup";
 import Start from "./pages/Start";
 import Profile from "./pages/Profile";
+import UserAuthentication from "./auth/UserAuthentication";
 
 // import { useContext } from "react";
 // import { UserDataContext } from "./context/UserContext";
@@ -25,7 +26,14 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/captain-login" element={<CaptainLogin />} />
         <Route path="/captain-signup" element={<CaptainSignup />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route
+          path="/profile"
+          element={
+            <UserAuthentication>
+              <Profile />
+            </UserAuthentication>
+          }
+        />
       </Routes>
     </div>
   );

@@ -28,12 +28,18 @@ function UserLogin() {
       userData
     );
 
-    console.log(response);
+    // console.log(response);
 
     if (response.status === 200) {
       const data = response.data;
-      console.log(data);
+      // console.log(data);
       setuser(data.user);
+
+      // console.log(data);
+      
+
+      localStorage.setItem("token", data.message.accessToken);
+      
       navigate("/profile");
     }
 
