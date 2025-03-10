@@ -48,6 +48,9 @@ const registerUser = asyncHandler(async (req, res, next) => {
         password,
     });
 
+    // console.log(user);
+    
+
     const createdUser = await User.findOne(user._id).select(
         "-password -socketId -refreshToken"
     );

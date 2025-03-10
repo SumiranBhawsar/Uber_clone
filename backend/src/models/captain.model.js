@@ -46,6 +46,13 @@ const captainSchema = new mongoose.Schema(
                 min: [1, "Capacity must be at least 1"],
             },
         },
+        socketId: {
+            type: String,
+            default: "",
+        },
+        refreshToken: {
+            type: String,
+        },
     },
     { timestamps: true }
 );

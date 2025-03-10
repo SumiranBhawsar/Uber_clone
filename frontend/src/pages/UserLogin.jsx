@@ -40,7 +40,7 @@ function UserLogin() {
 
       localStorage.setItem("token", data.message.accessToken);
       
-      navigate("/profile");
+      navigate("/home");
     }
 
     setemail("");

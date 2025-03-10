@@ -23,7 +23,7 @@ const generatAccessAndRefreshToken = async (captainId) => {
 const captainRegister = asyncHandler(async (req, res) => {
     const errors = await validationResult(req);
     if (!errors.isEmpty()) {
-        throw new ApiError(400, "Invalid details");
+        throw new ApiError(400, `Invalid details ${errors.message}`);
     }
 
     const {
@@ -169,7 +169,7 @@ const captainLogin = asyncHandler(async (req, res) => {
         .cookie("accessToken", accessToken, options)
         .json(
             new ApiResponse(
-                200,
+                201,
                 {
                     user: loggedInCaptain,
                     accessToken,

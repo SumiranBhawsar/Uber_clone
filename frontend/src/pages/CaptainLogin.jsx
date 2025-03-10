@@ -1,22 +1,52 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/no-unescaped-entities */
 // import React from 'react'
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { captainDataContext } from "../context/CaptainContext";
 
 function CaptainLogin() {
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
   const [captainData, setCaptainData] = useState({});
 
-  const handleSubmit = (e) => {
+  const { captain, setcaptain } = React.useContext(captainDataContext);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setCaptainData({
+    const captainData = {
       email: email,
       password: password,
-    });
+    };
 
-    console.log(captainData);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/captains/login`,
+        captainData
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        // console.log(data);
+        setcaptain(data.captain);
+
+        // console.log(data);
+
+        localStorage.setItem("captainToken", data.message.accessToken);
+
+        navigate("/captain-home");
+      }
+
+      setemail("");
+      setpassword("");
+
+    } catch (error) {
+      console.error("Error during captain login:", error.message);
+    }
 
     setemail("");
     setpassword("");
