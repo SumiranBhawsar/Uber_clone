@@ -14,6 +14,7 @@ import UserLogout from "./pages/UserLogout";
 import CaptainHome from "./pages/CaptainHome";
 import CaptainLogout from "./pages/CaptainLogout";
 import CaptainAuthentication from "./auth/CaptainAuthentication";
+import Riding from "./pages/Riding";
 
 // import { useContext } from "react";
 // import { UserDataContext } from "./context/UserContext";
@@ -29,6 +30,14 @@ function App() {
         <Route path="/" element={<Start />} />
         <Route path="/signup" element={<UserSignup />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route
+          path="/riding"
+          element={
+            <UserAuthentication>
+              <Riding />
+            </UserAuthentication>
+          }
+        />
         <Route path="/captain-login" element={<CaptainLogin />} />
         <Route path="/captain-signup" element={<CaptainSignup />} />
         <Route
