@@ -15,6 +15,7 @@ import CaptainHome from "./pages/CaptainHome";
 import CaptainLogout from "./pages/CaptainLogout";
 import CaptainAuthentication from "./auth/CaptainAuthentication";
 import Riding from "./pages/Riding";
+import CaptainRiding from "./pages/CaptainRiding";
 
 // import { useContext } from "react";
 // import { UserDataContext } from "./context/UserContext";
@@ -58,6 +59,14 @@ function App() {
           }
         />
         <Route path="/captain/logout" element={<CaptainLogout />} />
+        <Route
+          path="/captain-riding"
+          element={
+            <CaptainAuthentication>
+              <CaptainRiding />
+            </CaptainAuthentication>
+          }
+        />
       </Routes>
     </div>
   );
